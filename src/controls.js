@@ -6,6 +6,7 @@ let previousMousePosition = {
     y: 0
 };
 
+
 let touchStartX = 0;
 let touchEndX = 0;
 const swipeThreshold = 50; // Мінімальна відстань для розпізнавання свайпу
