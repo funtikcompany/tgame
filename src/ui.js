@@ -38,6 +38,6 @@ export function updateTextSprite(sprite, message) {
 
 export function updateUISpritePosition(sprite) {
     if (player) {
-        sprite.position.set(player.position.x, player.position.y + 3, player.position.z);
+        sprite.position.set(player.position.x, player.position.y + 10, player.position.z);
     }
 }

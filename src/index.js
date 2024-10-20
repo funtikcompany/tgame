@@ -1,6 +1,7 @@
+// index.js
 import * as THREE from 'three';
 import { scene, camera, renderer } from './scene.js';
-import { loadPlayer, player, mixer } from './player.js';
+import { loadPlayer, player, mixer, switchToRunAnimation } from './player.js';
 import { loadTrack, updateTrackPosition } from './track.js';
 import { createBrainsSequence, updateBrains } from './brains.js';
 import { setupControls } from './controls.js';
@@ -22,6 +23,9 @@ async function init() {
         await loadPlayer();
         await loadTrack();
         setupControls(player);
+        const delta = clock.getDelta();
+        if (mixer) mixer.update(delta); // Оновлюємо лише міксер персонажа
+    
 
         // Створення спрайта з початковим значенням 0
         brainCountSprite = createTextSprite('0');
@@ -41,8 +45,7 @@ async function init() {
         tutorialHandImg.src = TutorialHand;
         swipeToStartImg.src = SwipeToStart;
 
-        // Запускаємо анімацію, щоб Idle-стан гравця був видимий
-
+        // Додаємо обробник події для старту гри
         tutorial.addEventListener('click', onTutorialClick);
         window.addEventListener('resize', onWindowResize);
     } catch (error) {
@@ -50,7 +53,6 @@ async function init() {
         preloader.innerText = 'Не вдалося завантажити гру. Спробуйте ще раз.';
     }
 }
-
 
 // Оновлення розмірів рендерера і камери при зміні розміру вікна
 function onWindowResize() {
@@ -63,16 +65,14 @@ function onWindowResize() {
 }
 
 // Починаємо гру після кліку на туторіал
-
 function onTutorialClick() {
     const tutorial = document.getElementById('tutorial');
     tutorial.style.display = 'none';
-    // startRunningAnimation()
+    switchToRunAnimation();
     animate();
 }
 
 // Анімація гри
-
 function animate() {
     requestAnimationFrame(animate);
 
@@ -83,7 +83,7 @@ function animate() {
         player.position.z -= speed;
         camera.position.z = player.position.z + 20; // Відстань до гравця
         camera.position.x = player.position.x;
-        camera.position.y = player.position.y + 10; // Додатково піднімаємо камеру для кращого огляду
+        camera.position.y = player.position.y + 10;
 
         updateTrackPosition(player.position.z);
         updateUISpritePosition(brainCountSprite);

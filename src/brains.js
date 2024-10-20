@@ -8,8 +8,8 @@ import BrainModel from '../public/content/Brain.glb';
 
 
 const brainLoader = new GLTFLoader();
-const brainColors = [0xffa500, 0x0000ff, 0x800080];
-const lanes = [-5, 0, 5];
+const brainColors = ['aqua', 'red', 'yellow'];
+const lanes = [-4, 0, 4];
 export const brains = [];
 
 
