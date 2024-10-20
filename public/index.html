@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Running Game</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        @keyframes swipe {
+            0% { transform: translateY(-10px); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(-10px); }
+        }
+        @keyframes scale {
+            0% { transform: scale(1) }
+            50% {transform: scale(1.2); }
+            100% { transform: scale(1) }
+        }
+
+        #tutorial {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:end;
+            flex-direction:column;
+            z-index:10;
+        }
+
+        #preloader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 1);
+            z-index: 20;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffff;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Туторіал перед початком гри -->
+    <div id="preloader">Завантаження гри...</div>
+    <div id="tutorial">
+        <div style="animation: scale 1s infinite;">
+            <img class="swipe" alt="Swipe to start">
+        </div>
+        <div style="animation: swipe 1s infinite;">
+            <img class="hand" style="max-width:60px" alt="Hand swipe">
+        </div>
+    </div>
+
+    <!-- Підключення зібраного бандлу -->
+    <script src="bundle.js"></script>
+</body>
+</html>
