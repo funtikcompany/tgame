@@ -6,11 +6,6 @@ let previousMousePosition = {
     y: 0
 };
 
-
-let touchStartX = 0;
-let touchEndX = 0;
-const swipeThreshold = 50; // Мінімальна відстань для розпізнавання свайпу
-
 function handleMove(deltaX, player) {
     if (player) {
         player.position.x += deltaX * 0.01;
@@ -40,29 +35,22 @@ export function setupControls(player) {
     });
 
     // Для мобільних пристроїв
-
-    // Початок свайпу
     document.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].clientX;
+        isDragging = true;
+        previousMousePosition.x = e.touches[0].clientX;
     });
-    
-    // Завершення свайпу
-    document.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-    
-        if (Math.abs(swipeDistance) > swipeThreshold) {
-            if (swipeDistance > 0) {
-                // Свайп вправо
-                handleMove('right', player);
-            } else {
-                // Свайп вліво
-                handleMove('left', player);
-            }
+
+    document.addEventListener('touchmove', function(e) {
+        if (isDragging) {
+            const deltaMove = {
+                x: e.touches[0].clientX - previousMousePosition.x
+            };
+            handleMove(deltaMove.x, player);
+            previousMousePosition.x = e.touches[0].clientX;
         }
-    }
+    });
+
+    document.addEventListener('touchend', function(e) {
+        isDragging = false;
+    });
 }

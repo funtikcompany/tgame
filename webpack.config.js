@@ -8,8 +8,8 @@ module.exports = {
     entry: './src/index.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/', // Adjust if deploying to a subdirectory
+        path: path.resolve(__dirname, 'docs'),
+        publicPath: '',
     },
     devtool: 'source-map', // Optional, for debugging
     devServer: {
